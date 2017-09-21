@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="GBK"?>
+<configuration>
+	<!-- 应用名称 -->
+	 <property name="APP_NAME" value="confManager" /> 
+	<!-- 日志存放地址 -->
+	<property name="LOG_HOME" value="logs/${APP_NAME}" />
+	<!-- 日志名称 Controller出错信息 -->
+	<property name="LOG_NAME" value="error_log" />
+
+	<!-- 设置应该名称 -->
+	<contextName>${APP_NAME}</contextName>
+
+	<!-- 控制台打印组件 是负责控制台调试日志的组件 -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+        <pattern>
+            [ %-5level] [%date{yyyy-MM-dd HH:mm:ss}] %logger{96} [%line] - %msg%n
+        </pattern>
+        <charset>UTF-8</charset> <!-- 此处设置字符集 -->
+    </encoder>
+	</appender>
+
+	<!-- 日志存放组件 是负责需要记录项目控制层到磁盘的组件 -->
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- <Encoding>UTF-8</Encoding> -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>${LOG_HOME}/${LOG_NAME}.%d{yyyy-MM-dd}.log</FileNamePattern>
+			<MaxHistory>30</MaxHistory>
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} -
+				%msg%n
+			</pattern>
+		</layout>
+		<encoder>
+        <pattern>
+            [ %-5level] [%date{yyyy-MM-dd HH:mm:ss}] %logger{96} [%line] - %msg%n
+        </pattern>
+        <charset>UTF-8</charset> 
+    </encoder>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>10MB</MaxFileSize>
+		</triggeringPolicy>
+
+	</appender>
+
+	<!--  sql语句信息打印输出-->
+	<logger name="mybatis" level="DEBUG">  
+       <appender-ref ref="STDOUT" />  
+    </logger>  
+	<root level="INFO">
+		<appender-ref ref="FILE" />
+		<appender-ref ref="STDOUT" />
+	</root>
+	
+</configuration>  

@@ -1,0 +1,3 @@
+org\configManager\client\PropertyConfigurer.class
+org\configManager\client\ExtendedPropertyPlaceholderConfigurer.class
+org\configManager\client\App.class
